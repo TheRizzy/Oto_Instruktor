@@ -1,0 +1,26 @@
+{% extends "driving_instructor/base.html" %}
+
+{% block content %}
+
+<h1>Formularz rejestracji instruktora</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="first_name">Imię:</label>
+        <input type="text" id="first_name" name="first_name" required>
+        <br>
+        <label for="last_name">Nazwisko:</label>
+        <input type="text" id="last_name" name="last_name" required>
+        <br>
+        <label for="email">Adres email:</label>
+        <input type="email" id="email" name="email" required>
+        <br>
+        <label for="password">Hasło:</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+        <label for="is_instructor">Jestem instruktorem:</label>
+        <input type="checkbox" id="is_instructor" name="is_instructor">
+        <br>
+        <input type="submit" value="Zarejestruj">
+    </form>
+
+{% endblock %}
