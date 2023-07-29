@@ -24,5 +24,8 @@ urlpatterns = [
     path('', ex_views.mainPage.as_view(), name='home'),
     path('register_client/', ex_views.RegisterClient.as_view(), name='register_client'),
     path('register_instructor/', ex_views.RegisterInstructor.as_view(), name='register_instructor'),
+    path('login/', ex_views.loginView.as_view(), name='login'),
+    path('logout/', ex_views.logoutView.as_view(), name='logout'),
+    path('list_instructors/', ex_views.instructorListView.as_view(), name='list_instructors'),
 
 ]

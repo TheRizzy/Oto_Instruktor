@@ -11,8 +11,11 @@
         <img src="{% static 'logo.jpg' %}" width="150" height="150">
         <h1>Oto Instruktor</h1>
         <p>Aplikacja do łączenia instuktorów z kursantami.</p>
+        <a href="{% url 'home' %}"><button>Home</button></a>
         <a href="{% url 'register_client' %}"><button>Zarejestruj się jako client!</button></a>
         <a href="{% url 'register_instructor' %}"><button>Zarejestruj się jako Instruktor!</button></a>
+        <a href="{% url 'list_instructors' %}"><button>Lista Instruktorów</button></a>
+        <a href="{% url 'login' %}"><button>Zaloguj się</button></a>
         {% block content %}{% endblock %}
     </body>
 </html>
