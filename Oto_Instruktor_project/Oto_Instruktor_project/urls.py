@@ -22,6 +22,7 @@ from driving_instructor import views as ex_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', ex_views.mainPage.as_view(), name='home'),
-    path('register/', ex_views.RegisterView.as_view(), name='register'),
-    
+    path('register_client/', ex_views.RegisterClient.as_view(), name='register_client'),
+    path('register_instructor/', ex_views.RegisterInstructor.as_view(), name='register_instructor'),
+
 ]

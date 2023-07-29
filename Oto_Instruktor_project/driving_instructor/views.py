@@ -18,9 +18,17 @@ class mainPage(ListView):
         return User.objects.filter(instructor=True)
 
 
-class RegisterView(TemplateView):
+class RegisterInstructor(TemplateView):
     """
-    Class view for registration form view.
+    Class view for registration Instructor.
     """
 
-    template_name = 'driving_instructor/registerFormView.html'
+    template_name = 'driving_instructor/registerFormInstructor.html'
+
+
+class RegisterClient(TemplateView):
+    """
+    Class view for registration Client.
+    """
+
+    template_name = 'driving_instructor/registerFormClient.html'
