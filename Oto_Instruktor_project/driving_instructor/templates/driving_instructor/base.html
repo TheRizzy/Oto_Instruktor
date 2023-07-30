@@ -31,8 +31,6 @@
         <h1>Oto Instruktor</h1>
         <p>Aplikacja do łączenia instuktorów z kursantami.</p>
         <a href="{% url 'home' %}"><button>Home</button></a>
-        <a href="{% url 'register_client' %}"><button>Zarejestruj się jako client!</button></a>
-        <a href="{% url 'register_instructor' %}"><button>Zarejestruj się jako Instruktor!</button></a>
         <a href="{% url 'list_instructors' %}"><button>Lista Instruktorów</button></a>
 
         {% if user.is_authenticated %}
@@ -44,6 +42,9 @@
             <br>
             <p>Nie jesteś zalogowany.</p>
             <a href="{% url 'login' %}"><button>Zaloguj się</button></a>
+            <br>
+            <a href="{% url 'register_client' %}"><button>Rejestracja dla Klienta</button></a>
+            <a href="{% url 'register_instructor' %}"><button>Rejestracja dla Instruktora</button></a>
         {% endif %}
 
         {% block content %}
