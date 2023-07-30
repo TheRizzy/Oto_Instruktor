@@ -17,3 +17,20 @@ class Instructor(models.Model):
         return self.user.username
 
     # Here can add new fields to user models like: license number, photo of license? etc.
+
+
+
+class InstructorProfile(models.Model):
+    """
+    Class model for profile data of instructor.
+    """
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=50)
+    description = models.TextField()
+    personal_data = models.TextField()
+    company_data = models.TextField()
+    work_region = models.TextField()
+    hourly_rate = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.title}"

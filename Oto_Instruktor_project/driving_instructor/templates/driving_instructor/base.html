@@ -3,8 +3,27 @@
 <html>
     <head><meta charset="utf-8"></head>
     <style>
+        /* Style for center all page */
         body {
             text-align: center;
+        }
+
+        /* Style for success alert in editing profile */
+        .alert.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        /* Style for error alert in editing profile */
+        .alert.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            padding: 10px;
+            margin-bottom: 10px;
         }
     </style>
     <body>
@@ -15,7 +34,20 @@
         <a href="{% url 'register_client' %}"><button>Zarejestruj się jako client!</button></a>
         <a href="{% url 'register_instructor' %}"><button>Zarejestruj się jako Instruktor!</button></a>
         <a href="{% url 'list_instructors' %}"><button>Lista Instruktorów</button></a>
-        <a href="{% url 'login' %}"><button>Zaloguj się</button></a>
-        {% block content %}{% endblock %}
+
+        {% if user.is_authenticated %}
+            <br>
+            <p>Zalogowany użytkownik: {{ user.username }}</p>
+            <a href="{% url 'logout' %}"><button>Wyloguj się</button></a>
+            <a href="{% url 'instructor_profile' user.pk %}"><button>Edytuj swój profil</button></a>
+        {% else %}
+            <br>
+            <p>Nie jesteś zalogowany.</p>
+            <a href="{% url 'login' %}"><button>Zaloguj się</button></a>
+        {% endif %}
+
+        {% block content %}
+        
+        {% endblock %}
     </body>
 </html>

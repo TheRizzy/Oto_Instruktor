@@ -1,0 +1,21 @@
+{% extends "driving_instructor/base.html" %}
+
+{% block content %}
+
+    <h1>Edytuj swój profil instuktora</h1>
+    
+    {% if messages %}
+        {% for message in messages %}
+            <div {% if message.tags %}class="alert {{ message.tags }}"{% endif %}>
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Zapisz zmiany">
+        </form>
+
+{% endblock %}

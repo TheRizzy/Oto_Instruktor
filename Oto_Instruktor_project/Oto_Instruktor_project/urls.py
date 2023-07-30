@@ -27,5 +27,6 @@ urlpatterns = [
     path('login/', ex_views.loginView.as_view(), name='login'),
     path('logout/', ex_views.logoutView.as_view(), name='logout'),
     path('list_instructors/', ex_views.instructorListView.as_view(), name='list_instructors'),
+    path('instructor_profile/<int:pk>/', ex_views.InstructorProfileView.as_view(), name='instructor_profile'),
 
 ]
