@@ -1,0 +1,22 @@
+{% extends "driving_instructor/base.html" %}
+
+{% block content %}
+
+<h1>Lista Instruktorów</h1>
+    <ol type="1">
+        {% for instructor in instructors %}
+            <li>
+                <strong>Imię:</strong> {{ instructor.user.first_name }}<br>
+                <strong>Nazwisko:</strong> {{ instructor.user.last_name }}<br>
+                <strong>Tytuł:</strong> {{ instructor.title }}<br>
+                <strong>Zakres pracy:</strong> {{ instructor.work_region }}<br>
+                <strong>Cena za 1 godzinę jazdy:</strong> {{ instructor.hourly_rate }} PLN<br>
+                <button><a href="{% url 'instructor_detail' instructor.pk %}">Szczegóły</a></button><br>
+                <button><a href="#">Rezerwuj zajęcia (funkcjonalność zostanie dodana w przyszłości)</a></button>
+            </li>
+        {% empty %}
+            <li>Brak instruktorów.</li>
+        {% endfor %}
+    </ol>
+
+{% endblock %}

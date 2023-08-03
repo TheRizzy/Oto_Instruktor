@@ -1,12 +1,16 @@
 from django.forms.models import BaseModelForm
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.urls import reverse, reverse_lazy
-from django.views.generic import ListView, TemplateView, FormView, UpdateView
+from django.views import View
+from django.views.generic import ListView, TemplateView, FormView, UpdateView, DetailView
 from django.contrib import messages
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import User, Instructor, InstructorProfile
-from .forms import RegisterInstructorForm, RegisterClientForm, InstructorProfileForm
+from .models import User, Instructor, InstructorProfile, Availability, Reservation
+from .forms import RegisterInstructorForm, RegisterClientForm, InstructorProfileForm, ReservationForm, AvailabilityForm
+from django.contrib.auth.decorators import login_required
+from django.utils import timezone
 
 
 
@@ -29,13 +33,9 @@ class instructorListView(ListView):
     """
     Class view for display list of instructors.
     """
-    model = User
-    template_name = 'driving_instructor/listInstructorsView.html'
+    model = InstructorProfile
+    template_name = 'driving_instructor/instructorsListView.html'
     context_object_name = 'instructors'
-
-    def get_queryset(self):
-        # get list of instructors 
-        return User.objects.filter(instructor=True)
 
 
 class RegisterInstructor(FormView):
@@ -57,7 +57,6 @@ class RegisterInstructor(FormView):
         user = form.save()
         Instructor.objects.create(user=user, is_instructor=True, legitimacy=form.cleaned_data['legitimacy'])
         return super().form_valid(form)
-
 
 
 class RegisterClient(FormView):
@@ -136,3 +135,77 @@ class InstructorProfileView(LoginRequiredMixin, UpdateView):
         response = super().form_invalid(form)
         messages.error(self.request, 'Wystąpił bład podczas zapisu informacj.')
         return response
+
+
+class InstructorDetailView(DetailView):
+    model = InstructorProfile
+    template_name = 'driving_instructor/instructorDetail.html'
+    context_object_name = 'instructor'
+
+
+
+
+class AddAvailabilityView(LoginRequiredMixin, View):
+    template_name = 'driving_instructor/instructorAddAvailabilityView.html'
+    form_class = AvailabilityForm
+
+    def get(self, request):
+        form = self.form_class()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            # Get login instructor 
+            instructor = Instructor.objects.get(user=request.user)
+
+            # Get data from form
+            date = form.cleaned_data['date']
+            start_time = form.cleaned_data['start_time']
+            end_time = form.cleaned_data['end_time']
+
+            # Create object of Availability and save to database
+            availability = Availability(instructor=instructor, date=date, start_time=start_time, end_time=end_time)
+            availability.save()
+            messages.success(self.request, 'Dostępność została pomyślnie dodana.')
+            return redirect('instructor_add_availability')
+        return render(request, self.template_name, {'form': form})
+
+
+class InstructorAvailabilityView(LoginRequiredMixin, View):
+    template_name = 'driving_instructor/instructorAvailabilityView.html'
+
+    def get(self, request):
+        # Get login
+        instructor = Instructor.objects.get(user=request.user)
+
+        # Get availabilities assigned to instructor
+        availabilities = Availability.objects.filter(instructor=instructor, date__gte=timezone.now().date())
+        return render(request, self.template_name, {'availabilities': availabilities})
+
+# @login_required
+# def instructor_detail(request, instructor_id):
+#     # Wyświetlenie szczegółów instruktora, wraz z wolnymi terminami zajęć
+
+
+
+# @login_required
+# def make_reservation(request, instructor_id, date, start_time, end_time):
+#     if request.method == 'POST':
+#         form = ReservationForm(request.POST)
+#         if form.is_valid():
+#             # Obsługa zapisu rezerwacji
+#     else:
+#         # Wyświetlenie formularza do rezerwacji zajęć
+
+# @login_required
+# def instructor_reservations(request, instructor_id):
+#     # Wyświetlenie listy rezerwacji dla danego instruktora
+
+# @login_required
+# def confirm_reservation(request, reservation_id):
+#     # Obsługa potwierdzenia rezerwacji przez instruktora
+
+# @login_required
+# def reject_reservation(request, reservation_id):
+#     # Obsługa odrzucenia rezerwacji przez instruktora

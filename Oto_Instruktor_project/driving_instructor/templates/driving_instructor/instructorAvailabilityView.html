@@ -1,0 +1,12 @@
+{% extends "driving_instructor/base.html" %}
+
+{% block content %}
+
+<h1>Dostępności Instruktora</h1>
+<ul>
+    {% for availability in availabilities %}
+        <li>{{ availability.date }} - {{ availability.start_time }} do {{ availability.end_time }}</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

@@ -1,7 +1,12 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import Instructor, InstructorProfile
+from .models import Instructor, InstructorProfile, Availability
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
+from django.utils import timezone
+
+
 
 class RegisterInstructorForm(UserCreationForm):
     """
@@ -29,3 +34,34 @@ class InstructorProfileForm(forms.ModelForm):
     class Meta:
         model = InstructorProfile
         fields = ['title', 'description', 'personal_data', 'company_data', 'work_region', 'hourly_rate']
+
+
+class AvailabilityForm(forms.Form):
+    date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    start_time = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'}))
+    end_time = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'}))
+
+    def clean(self):
+        cleaned_data = super().clean()
+        date = cleaned_data.get('date')
+        start_time = cleaned_data.get('start_time')
+        end_time = cleaned_data.get('end_time')
+
+        # Sprawdzenie, czy data i czas są w przyszłości
+        if date and start_time:
+            start_datetime = timezone.datetime.combine(date, start_time)
+            if start_datetime < timezone.now():
+                raise ValidationError(_("Start time must be in the future."))
+
+        # Sprawdzenie, czy end_time > start_time
+        if start_time and end_time and end_time <= start_time:
+            raise ValidationError(_("End time must be after start time."))
+
+        return cleaned_data
+
+
+class ReservationForm(forms.Form):
+    date = forms.DateField(widget=forms.HiddenInput())
+    start_time = forms.TimeField(widget=forms.HiddenInput())
+    end_time = forms.TimeField(widget=forms.HiddenInput())
+    comment = forms.CharField(widget=forms.Textarea, required=False)

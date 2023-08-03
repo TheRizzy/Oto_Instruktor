@@ -26,7 +26,11 @@ urlpatterns = [
     path('register_instructor/', ex_views.RegisterInstructor.as_view(), name='register_instructor'),
     path('login/', ex_views.loginView.as_view(), name='login'),
     path('logout/', ex_views.logoutView.as_view(), name='logout'),
-    path('list_instructors/', ex_views.instructorListView.as_view(), name='list_instructors'),
+    path('instructors_list/', ex_views.instructorListView.as_view(), name='instructors_list'),
     path('instructor_profile/<int:pk>/', ex_views.InstructorProfileView.as_view(), name='instructor_profile'),
+    path('instructor_detail/<int:pk>', ex_views.InstructorDetailView.as_view(), name='instructor_detail'),
+    path('instructor_add_availability/', ex_views.AddAvailabilityView.as_view(), name='instructor_add_availability'),
+    path('instructor_availability/', ex_views.InstructorAvailabilityView.as_view(), name='instructor_availability_view')
+
 
 ]

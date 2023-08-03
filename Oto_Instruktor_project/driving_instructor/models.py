@@ -16,9 +16,6 @@ class Instructor(models.Model):
         """
         return self.user.username
 
-    # Here can add new fields to user models like: license number, photo of license? etc.
-
-
 
 class InstructorProfile(models.Model):
     """
@@ -31,6 +28,24 @@ class InstructorProfile(models.Model):
     company_data = models.TextField()
     work_region = models.TextField()
     hourly_rate = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    availability = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.user.username} - {self.title}"
+
+
+class Availability(models.Model):
+    instructor = models.ForeignKey(Instructor, on_delete=models.CASCADE)
+    date = models.DateField()
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+
+
+class Reservation(models.Model):
+    instructor = models.ForeignKey(Instructor, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date = models.DateField()
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+    comment = models.TextField(blank=True, null=True)
+    is_confirmed = models.BooleanField(default=False)    

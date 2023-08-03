@@ -1,14 +1,18 @@
 {% load static %}
 <!doctype html>
 <html>
-    <head><meta charset="utf-8"></head>
+    <head><meta charset="utf-8">
+        {% load bootstrap5 %}
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
+    </head>
     <style>
         /* Style for center all page */
         body {
             text-align: center;
         }
 
-        /* Style for success alert in editing profile */
+        /* Style for success alert */
         .alert.success {
             background-color: #d4edda;
             color: #155724;
@@ -17,7 +21,7 @@
             margin-bottom: 10px;
         }
 
-        /* Style for error alert in editing profile */
+        /* Style for error alert */
         .alert.error {
             background-color: #f8d7da;
             color: #721c24;
@@ -25,19 +29,27 @@
             padding: 10px;
             margin-bottom: 10px;
         }
+
+        {% block style %}
+        
+        {% endblock style %}
     </style>
     <body>
         <img src="{% static 'logo.jpg' %}" width="150" height="150">
         <h1>Oto Instruktor</h1>
         <p>Aplikacja do łączenia instuktorów z kursantami.</p>
         <a href="{% url 'home' %}"><button>Home</button></a>
-        <a href="{% url 'list_instructors' %}"><button>Lista Instruktorów</button></a>
+        <a href="{% url 'instructors_list' %}"><button>Lista Instruktorów</button></a>
 
         {% if user.is_authenticated %}
             <br>
             <p>Zalogowany użytkownik: {{ user.username }}</p>
             <a href="{% url 'logout' %}"><button>Wyloguj się</button></a>
-            <a href="{% url 'instructor_profile' user.pk %}"><button>Edytuj swój profil</button></a>
+                <!-- Here need add check if user is instructor - if true:  -->
+                <a href="{% url 'instructor_profile' user.pk %}"><button>Edytuj swój profil</button></a>
+                <a href="{% url 'instructor_add_availability'%}"><button>Edytuj swoją dostępność</button></a>
+                <a href="{% url 'instructor_availability_view'%}"><button>Zobacz dodaną dostępność</button></a>
+
         {% else %}
             <br>
             <p>Nie jesteś zalogowany.</p>
@@ -50,5 +62,11 @@
         {% block content %}
         
         {% endblock %}
+
+        <script>
+        // {% block script %}
+        
+        // {% endblock script %}
+        </script>
     </body>
 </html>
