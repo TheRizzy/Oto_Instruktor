@@ -64,4 +64,10 @@ class AvailabilityForm(forms.Form):
 class ReservationForm(forms.ModelForm):
     class Meta:
         model = Reservation
-        fields = ['date', 'start_time', 'end_time', 'comment']
+        fields = ['comment']
+
+
+class ConfirmationForm(forms.Form):
+    CHOICES = [('confirm', 'Potwierdź'), ('reject', 'Odrzuć')]
+    action = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect)
+    reservation_id = forms.IntegerField(widget=forms.HiddenInput())

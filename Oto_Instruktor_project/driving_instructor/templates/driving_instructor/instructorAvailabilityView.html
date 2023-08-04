@@ -2,7 +2,23 @@
 
 {% block content %}
 
-<h1>Dostępności Instruktora</h1>
+<h1>Dodaj Dostępność</h1>
+
+{% if messages %}
+{% for message in messages %}
+    <div {% if message.tags %}class="alert {{ message.tags }}"{% endif %}>
+        {{ message }}
+    </div>
+{% endfor %}
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Dodaj">
+</form>
+
+<h1>Twoja dodana dostępność</h1>
 <ul>
     {% for availability in availabilities %}
         <li>{{ availability.date }} - {{ availability.start_time }} do {{ availability.end_time }}</li>

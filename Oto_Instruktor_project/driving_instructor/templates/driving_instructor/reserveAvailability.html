@@ -3,10 +3,10 @@
 {% block content %}
 
 <h1>Zarezerwuj Dostępność</h1>
-<p>Instruktor: {{ availability.instructor }}</p>
-<p>Data: {{ availability.date }}</p>
-<p>Godzina rozpoczęcia: {{ availability.start_time }}</p>
-<p>Godzina zakończenia: {{ availability.end_time }}</p>
+<p><strong>Instruktor</strong> {{ availability.instructor.user.first_name }} {{ availability.instructor.user.last_name }}</p>
+<p><strong>Data</strong> {{ availability.date }}</p>
+<p><strong>Godzina rozpoczęcia:</strong> {{ availability.start_time }}</p>
+<p><strong>Godzina zakończenia:</strong> {{ availability.end_time }}</p>
 
 <form method="post">
     {% csrf_token %}

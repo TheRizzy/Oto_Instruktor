@@ -50,6 +50,4 @@ class Reservation(models.Model):
     comment = models.TextField(blank=True, null=True)
     is_confirmed = models.BooleanField(default=False)
 
-    def __str__(self):
-        return f"Reservation by {self.user.username} on {self.date} from {self.start_time} to {self.end_time}"
  

@@ -12,7 +12,7 @@
                 <strong>Zakres pracy:</strong> {{ instructor.work_region }}<br>
                 <strong>Cena za 1 godzinę jazdy:</strong> {{ instructor.hourly_rate }} PLN<br>
                 <button><a href="{% url 'instructor_detail' instructor.pk %}">Szczegóły</a></button><br>
-                <button><a href="#">Rezerwuj zajęcia (funkcjonalność zostanie dodana w przyszłości)</a></button>
+                <hr>
             </li>
         {% empty %}
             <li>Brak instruktorów.</li>

@@ -29,10 +29,11 @@ urlpatterns = [
     path('instructors_list/', ex_views.instructorListView.as_view(), name='instructors_list'),
     path('instructor_profile/<int:pk>/', ex_views.InstructorProfileView.as_view(), name='instructor_profile'),
     path('instructor_detail/<int:pk>', ex_views.InstructorDetailView.as_view(), name='instructor_detail'),
-    path('instructor_add_availability/', ex_views.AddAvailabilityView.as_view(), name='instructor_add_availability'),
-    path('instructor_availability/', ex_views.InstructorAvailabilityView.as_view(), name='instructor_availability_view'),
+    path('instructor_availability/', ex_views.AddAvailabilityView.as_view(), name='instructor_availability'),
     path('reserve_availability/<int:availability_id>/', ex_views.ReserveAvailabilityView.as_view(), name='reserve_availability'),
-
-
+    path('confirmation/', ex_views.ConfirmationView.as_view(), name='confirmation'),
+    path('instructor_reservations/', ex_views.InstructorReservationView.as_view(), name='instructor_reservations'),
+    path('instructor_confirm_reservation/<int:pk>', ex_views.InstructorConfirmReservationView.as_view(), name='instructor_confirm_reservation'),
+    path('instructor_reject_reservation/<int:pk>', ex_views.InstructorRejectReservationView.as_view(), name='instructor_reject_reservation'),
 
 ]
