@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import Instructor, InstructorProfile, Availability
+from .models import Instructor, InstructorProfile, Availability, Reservation
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
@@ -47,21 +47,21 @@ class AvailabilityForm(forms.Form):
         start_time = cleaned_data.get('start_time')
         end_time = cleaned_data.get('end_time')
 
-        # Sprawdzenie, czy data i czas są w przyszłości
+        # Check if date and time is from future
         if date and start_time:
             start_datetime = timezone.datetime.combine(date, start_time)
             if start_datetime < timezone.now():
                 raise ValidationError(_("Start time must be in the future."))
 
-        # Sprawdzenie, czy end_time > start_time
+        # Check if end_time > start_time
         if start_time and end_time and end_time <= start_time:
             raise ValidationError(_("End time must be after start time."))
 
         return cleaned_data
 
 
-class ReservationForm(forms.Form):
-    date = forms.DateField(widget=forms.HiddenInput())
-    start_time = forms.TimeField(widget=forms.HiddenInput())
-    end_time = forms.TimeField(widget=forms.HiddenInput())
-    comment = forms.CharField(widget=forms.Textarea, required=False)
+
+class ReservationForm(forms.ModelForm):
+    class Meta:
+        model = Reservation
+        fields = ['date', 'start_time', 'end_time', 'comment']

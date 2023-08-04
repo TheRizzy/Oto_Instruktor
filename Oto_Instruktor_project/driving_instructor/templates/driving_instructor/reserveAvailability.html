@@ -1,0 +1,17 @@
+{% extends "driving_instructor/base.html" %}
+
+{% block content %}
+
+<h1>Zarezerwuj Dostępność</h1>
+<p>Instruktor: {{ availability.instructor }}</p>
+<p>Data: {{ availability.date }}</p>
+<p>Godzina rozpoczęcia: {{ availability.start_time }}</p>
+<p>Godzina zakończenia: {{ availability.end_time }}</p>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Zarezerwuj">
+</form>
+
+{% endblock %}

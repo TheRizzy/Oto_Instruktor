@@ -8,7 +8,7 @@ from django.contrib import messages
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import User, Instructor, InstructorProfile, Availability, Reservation
-from .forms import RegisterInstructorForm, RegisterClientForm, InstructorProfileForm, ReservationForm, AvailabilityForm
+from .forms import RegisterInstructorForm, RegisterClientForm, InstructorProfileForm, ReservationForm, AvailabilityForm, ReservationForm
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 
@@ -182,6 +182,28 @@ class InstructorAvailabilityView(LoginRequiredMixin, View):
         # Get availabilities assigned to instructor
         availabilities = Availability.objects.filter(instructor=instructor, date__gte=timezone.now().date())
         return render(request, self.template_name, {'availabilities': availabilities})
+
+
+class ReserveAvailabilityView(LoginRequiredMixin, View):
+    template_name = 'driving_instructor/reserveAvailability.html'
+    form_class = ReservationForm
+
+    def get(self, request, availability_id):
+        availability = Availability.objects.get(pk=availability_id)
+        form = self.form_class(initial={'date': availability.date, 'start_time': availability.start_time, 'end_time': availability.end_time})
+        return render(request, self.template_name, {'form': form, 'availability': availability})
+
+    def post(self, request, availability_id):
+        availability = Availability.objects.get(pk=availability_id)
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            reservation = form.save(commit=False)
+            reservation.user = request.user
+            reservation.instructor = availability.instructor
+            reservation.save()
+            return redirect('home')
+        return render(request, self.template_name, {'form': form, 'availability': availability})
+
 
 # @login_required
 # def instructor_detail(request, instructor_id):
