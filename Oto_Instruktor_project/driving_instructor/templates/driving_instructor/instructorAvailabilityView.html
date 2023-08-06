@@ -21,7 +21,10 @@
 <h1>Twoja dodana dostępność</h1>
 <ul>
     {% for availability in availabilities %}
-        <li>{{ availability.date }} - {{ availability.start_time }} do {{ availability.end_time }}</li>
+        <li>
+            {{ availability.date }} - {{ availability.start_time }} do {{ availability.end_time }}
+            <a href="{% url 'delete_availability' availability.pk %}"><button>Usuń</button></a>
+        </li>
     {% endfor %}
 </ul>
 

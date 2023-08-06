@@ -1,6 +1,6 @@
 from django.forms.models import BaseModelForm
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.views import View
 from django.views.generic import ListView, TemplateView, FormView, UpdateView, DetailView
@@ -161,43 +161,50 @@ class InstructorDetailView(DetailView):
 
         return context
 
-
-class AddAvailabilityView(LoginRequiredMixin, View):
+class AddAvailabilityView(LoginRequiredMixin, TemplateView):
     template_name = 'driving_instructor/instructorAvailabilityView.html'
     form_class = AvailabilityForm
 
-    def get(self, request):
-        form = self.form_class()
-        instructor = Instructor.objects.get(user=request.user)
-
-        # Get availabilities assigned to instructor, only from future
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        instructor = Instructor.objects.get(user=self.request.user)
+        
         availabilities = Availability.objects.filter(instructor=instructor, date__gte=timezone.now().date())
-
-        # Sorting availabilities from the nearest date
         sorted_availabilities = sorted(availabilities, key=attrgetter('date', 'start_time'))
-
-        return render(request, self.template_name, {'form': form, 'availabilities': sorted_availabilities})
+        
+        context['form'] = self.form_class()
+        context['availabilities'] = sorted_availabilities
+        
+        return context
 
     def post(self, request):
         form = self.form_class(request.POST)
-        # Get login instructor 
         instructor = Instructor.objects.get(user=request.user)
+
         if form.is_valid():
-            
-            # Get data from form
             date = form.cleaned_data['date']
             start_time = form.cleaned_data['start_time']
             end_time = form.cleaned_data['end_time']
 
-            # Create object of Availability and save to database
             availability = Availability(instructor=instructor, date=date, start_time=start_time, end_time=end_time)
             availability.save()
             messages.success(self.request, 'Dostępność została pomyślnie dodana.')
             return redirect('instructor_availability')
         
         availabilities = Availability.objects.filter(instructor=instructor, date__gte=timezone.now().date())
-        messages.error(self.request, 'Bład podczas zapisu informacj.')
-        return render(request, self.template_name, {'form': form, 'availabilities': availabilities})
+        messages.error(self.request, 'Błąd podczas zapisu informacji.')
+        return self.render_to_response({'form': form, 'availabilities': availabilities})
+
+class DeleteAvailabilityView(LoginRequiredMixin, View):
+    """
+    View to delete availability for instructor
+    """
+    def get(self, request, *args, **kwargs):
+        pk = kwargs['pk']
+        availability = Availability.objects.get(pk=pk)
+        availability.delete()
+        messages.success(request, 'Dostępność została pomyślnie usunięta.')
+        return redirect('instructor_availability')
 
 
 class ReserveAvailabilityView(LoginRequiredMixin, View):
@@ -265,7 +272,6 @@ class InstructorReservationView(FormView):
         context = super().get_context_data(**kwargs)
         context['reservations'] = Reservation.objects.filter(
             instructor=self.request.user.instructor,
-            # is_confirmed=False
         )
         return context
 
