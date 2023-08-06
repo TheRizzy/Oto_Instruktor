@@ -1,0 +1,21 @@
+{% extends "driving_instructor/base.html" %}
+
+{% block content %}
+    <h1>Twoje Rezerwacje</h1>
+
+    {% for reservation in reservations %}
+        <div>
+            <h2>Rezerwacja nr {{ reservation.id }}</h2>
+            <p><strong>Data:</strong> {{ reservation.date }}</p>
+            <p><strong>Godzina rozpoczęcia:</strong> {{ reservation.start_time }}</p>
+            <p><strong>Godzina zakończenia:</strong> {{ reservation.end_time }}</p>
+            <p><strong>Komentarz:</strong> {{ reservation.comment|default:"Brak" }}</p>
+            <h3>Informacje o instruktorze</h3>
+            <p><strong>Imię instruktora:</strong> {{ reservation.instructor.user.first_name }}</p>
+            <p><strong>Nazwisko instruktora:</strong> {{ reservation.instructor.user.last_name }}</p>
+            <h4>Status</h4>
+            <p><strong>Potwierdzona przez instuktora:</strong> {{ reservation.is_confirmed }}</p>
+        </div>
+        <hr>
+    {% endfor %}
+{% endblock %}

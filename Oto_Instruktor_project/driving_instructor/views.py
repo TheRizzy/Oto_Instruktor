@@ -292,3 +292,17 @@ class InstructorRejectReservationView(View):
         reservation = get_object_or_404(Reservation, pk=pk, instructor=request.user.instructor, is_confirmed=False)
         reservation.delete()
         return redirect('instructor_reservations')
+    
+
+class UserReservationsView(LoginRequiredMixin, ListView):
+    """
+    Class view for list user reservations.
+    """
+    template_name = 'driving_instructor/UserReservationsView.html'
+    model = Reservation
+    context_object_name = 'reservations'
+
+    def get_queryset(self):
+        user = self.request.user
+        return Reservation.objects.filter(user=user)
+     

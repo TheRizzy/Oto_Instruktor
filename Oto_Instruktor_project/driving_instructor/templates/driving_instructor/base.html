@@ -54,9 +54,9 @@
                 {% if user.instructor.is_instructor == True %}
                     <a href="{% url 'instructor_profile' user.pk %}"><button>Edytuj swój profil</button></a>
                     <a href="{% url 'instructor_availability'%}"><button>Edytuj swoją dostępność</button></a>
-                    <a href="{% url 'instructor_reservations'%}"><button>Propozycje zajęć</button></a>
+                    <a href="{% url 'instructor_reservations'%}"><button>Propozycje zajęć od kursantów</button></a>
                 {% else %}
-                    <a href="#"><button>Twoje rezerwacje u Instruktorów</button></a>
+                    <a href="{% url 'user_reservations' %}"><button>Twoje rezerwacje u Instruktorów</button></a>
                 {% endif %}
                 
         {% else %}

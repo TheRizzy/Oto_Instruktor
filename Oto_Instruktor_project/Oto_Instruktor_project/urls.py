@@ -35,5 +35,6 @@ urlpatterns = [
     path('instructor_reservations/', ex_views.InstructorReservationView.as_view(), name='instructor_reservations'),
     path('instructor_confirm_reservation/<int:pk>', ex_views.InstructorConfirmReservationView.as_view(), name='instructor_confirm_reservation'),
     path('instructor_reject_reservation/<int:pk>', ex_views.InstructorRejectReservationView.as_view(), name='instructor_reject_reservation'),
+    path('user_reservations/', ex_views.UserReservationsView.as_view(), name='user_reservations')
 
 ]

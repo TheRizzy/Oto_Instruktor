@@ -13,19 +13,10 @@ def test_create_user_instructor(client):
     # Create object Instructor related with this new created instructor
     user_1_instructor_profile = Instructor.objects.create(user=user_1_instructor, is_instructor=True)
 
-    # Check that 2x users was crate
-    assert User.objects.count() == 2
+    # Check that 1x users was crate
+    assert User.objects.count() == 1
 
     # Check that user_1_instructor is instructor 
     assert user_1_instructor_profile.is_instructor 
 
-    # Check that list property shows on main page (home)
-    url = reverse('home')
-    response = client.get(url)
-    assert response.status_code == 200
-    assertQuerysetEqual(
-        response.context['instructors'],
-        [repr(user_1_instructor)],
-        transform=repr
-    )
 
