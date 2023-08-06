@@ -265,7 +265,7 @@ class InstructorReservationView(FormView):
         context = super().get_context_data(**kwargs)
         context['reservations'] = Reservation.objects.filter(
             instructor=self.request.user.instructor,
-            is_confirmed=False
+            # is_confirmed=False
         )
         return context
 

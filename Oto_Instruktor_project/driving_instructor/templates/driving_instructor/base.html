@@ -6,6 +6,7 @@
         {% bootstrap_css %}
         {% bootstrap_javascript %}
         <link rel="shortcut icon" type="image/jpg" href="{% static 'logo.jpg' %}" >
+        <title>Oto Instructor</title>
     </head>
     <style>
         /* Style for center all page */
@@ -54,7 +55,7 @@
                 {% if user.instructor.is_instructor == True %}
                     <a href="{% url 'instructor_profile' user.pk %}"><button>Edytuj swój profil</button></a>
                     <a href="{% url 'instructor_availability'%}"><button>Edytuj swoją dostępność</button></a>
-                    <a href="{% url 'instructor_reservations'%}"><button>Propozycje zajęć od kursantów</button></a>
+                    <a href="{% url 'instructor_reservations'%}"><button>Rezerwacje</button></a>
                 {% else %}
                     <a href="{% url 'user_reservations' %}"><button>Twoje rezerwacje u Instruktorów</button></a>
                 {% endif %}
