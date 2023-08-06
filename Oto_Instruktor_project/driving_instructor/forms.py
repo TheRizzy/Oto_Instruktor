@@ -18,6 +18,16 @@ class RegisterInstructorForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'is_instructor', 'legitimacy']
+        labels = {
+            'username': 'Nazwa uzytkownika',
+            'first_name': 'Imię',
+            'last_name': 'Nazwisko',
+            'email': 'Email',
+            'password1': 'Hasło',
+            'password2': 'Powtórz hasło',
+            'is_instructor': 'Potwierdzam, ze jestem certyfikowany instuktorem nauk jazdy',
+            'legitimacy': 'Prześlij zdjęcie swojej legitymacji',
+        }
 
 class RegisterClientForm(UserCreationForm):
     """
@@ -26,6 +36,14 @@ class RegisterClientForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
+        labels = {
+            'username': 'Nazwa uzytkownika',
+            'first_name': 'Imię',
+            'last_name': 'Nazwisko',
+            'email': 'Email',
+            'password1': 'Hasło',
+            'password2': 'Powtórz hasło',
+        }
 
 class InstructorProfileForm(forms.ModelForm):
     """
@@ -34,6 +52,23 @@ class InstructorProfileForm(forms.ModelForm):
     class Meta:
         model = InstructorProfile
         fields = ['title', 'description', 'personal_data', 'company_data', 'work_region', 'hourly_rate']
+        labels = {
+            'title': 'Twoja nazwa ogłoszenia',
+            'description': 'Opis',
+            'personal_data': 'Dane osobowe',
+            'company_data': 'Dane firmy',
+            'work_region': 'Region pracy',
+            'hourly_rate': 'Stawka za godzinę jazd dodatkowych'
+        }
+
+    def clean_hourly_rate(self):
+        """
+        Function to block hourly rate below zero.
+        """
+        hourly_rate = self.cleaned_data.get('hourly_rate')
+        if hourly_rate < 0:
+            raise forms.ValidationError("Stawka godzinowa nie może być ujemna.")
+        return hourly_rate
 
 
 class AvailabilityForm(forms.Form):

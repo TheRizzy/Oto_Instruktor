@@ -5,6 +5,7 @@
         {% load bootstrap5 %}
         {% bootstrap_css %}
         {% bootstrap_javascript %}
+        <link rel="shortcut icon" type="image/jpg" href="{% static 'logo.jpg' %}" >
     </head>
     <style>
         /* Style for center all page */
@@ -39,7 +40,7 @@
         {% endblock style %}
     </style>
     <body>
-        <img src="{% static 'logo.jpg' %}" width="150" height="150">
+        <img src="{% static 'logo.jpg' %}" width="100" height="100">
         <h1>Oto Instruktor</h1>
         <p>Aplikacja do łączenia instuktorów z kursantami.</p>
         <a href="{% url 'home' %}"><button>Home</button></a>
@@ -49,10 +50,14 @@
             <br>
             <p>Zalogowany użytkownik: {{ user.username }}</p>
             <a href="{% url 'logout' %}"><button>Wyloguj się</button></a>
-                <!-- Here need add check if user is instructor - if true:  -->
-                <a href="{% url 'instructor_profile' user.pk %}"><button>Edytuj swój profil</button></a>
-                <a href="{% url 'instructor_availability'%}"><button>Edytuj swoją dostępność</button></a>
-                <a href="{% url 'instructor_reservations'%}"><button>Zobacz swoje rezerwację</button></a>
+
+                {% if user.instructor.is_instructor == True %}
+                    <a href="{% url 'instructor_profile' user.pk %}"><button>Edytuj swój profil</button></a>
+                    <a href="{% url 'instructor_availability'%}"><button>Edytuj swoją dostępność</button></a>
+                    <a href="{% url 'instructor_reservations'%}"><button>Propozycje zajęć</button></a>
+                {% else %}
+                    <a href="#"><button>Twoje rezerwacje u Instruktorów</button></a>
+                {% endif %}
                 
         {% else %}
             <br>

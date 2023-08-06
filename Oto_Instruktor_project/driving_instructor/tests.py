@@ -7,7 +7,7 @@ from driving_instructor.models import Instructor
 
 @pytest.mark.django_db
 def test_create_user_instructor(client):
-    # Make new users: 1x instructors and 1x client users
+    # Make new user: 1x instructor
     user_1_instructor = User.objects.create_user(username='instructor', first_name='Jan', last_name='Point', email='instructor@mail.com', password='test123')
 
     # Create object Instructor related with this new created instructor

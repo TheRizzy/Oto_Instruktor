@@ -118,7 +118,7 @@ class InstructorProfileView(LoginRequiredMixin, UpdateView):
         Function to find instructor base on login user primary key
         """
         try:
-            profile = self.request.user.instructorprofile
+            profile = self.request.user.instructorprofile 
         except InstructorProfile.DoesNotExist:
             # If profile not exist, create new one
             profile = InstructorProfile(user=self.request.user)
@@ -153,7 +153,6 @@ class InstructorDetailView(DetailView):
         context['availabilities'] = availabilities
 
         return context
-
 
 
 class AddAvailabilityView(LoginRequiredMixin, View):
