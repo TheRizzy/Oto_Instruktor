@@ -147,12 +147,17 @@ class InstructorDetailView(DetailView):
         context = super().get_context_data(**kwargs)
 
         instructor_profile = InstructorProfile.objects.get(pk=self.kwargs['pk'])
-
         instructor = Instructor.objects.get(pk=self.kwargs['pk'])
+
+        # Get all availabilities instructor
         availabilities = Availability.objects.filter(instructor=instructor, date__gte=timezone.now().date())
-        
+
+        # Filer for done reservation and show only free
+        reserved_dates = Reservation.objects.filter(instructor=instructor)
+        available_dates = availabilities.exclude(date__in=[reservation.date for reservation in reserved_dates])
+
         context['instructor'] = instructor_profile
-        context['availabilities'] = availabilities
+        context['availabilities'] = available_dates
 
         return context
 
