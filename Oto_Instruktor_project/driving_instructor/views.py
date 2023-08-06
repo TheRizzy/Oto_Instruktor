@@ -11,6 +11,8 @@ from .models import User, Instructor, InstructorProfile, Availability, Reservati
 from .forms import RegisterInstructorForm, RegisterClientForm, InstructorProfileForm, ReservationForm, AvailabilityForm, ReservationForm, ConfirmationForm
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+from operator import attrgetter
+
 
 
 
@@ -163,9 +165,13 @@ class AddAvailabilityView(LoginRequiredMixin, View):
         form = self.form_class()
         instructor = Instructor.objects.get(user=request.user)
 
-        # Get availabilities assigned to instructor
+        # Get availabilities assigned to instructor, only from future
         availabilities = Availability.objects.filter(instructor=instructor, date__gte=timezone.now().date())
-        return render(request, self.template_name, {'form': form, 'availabilities': availabilities})
+
+        # Sorting availabilities from the nearest date
+        sorted_availabilities = sorted(availabilities, key=attrgetter('date', 'start_time'))
+
+        return render(request, self.template_name, {'form': form, 'availabilities': sorted_availabilities})
 
     def post(self, request):
         form = self.form_class(request.POST)
