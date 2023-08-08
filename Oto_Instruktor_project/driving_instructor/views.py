@@ -156,10 +156,11 @@ class InstructorDetailView(DetailView):
         reserved_dates = Reservation.objects.filter(instructor=instructor)
         available_dates = availabilities.exclude(date__in=[reservation.date for reservation in reserved_dates])
 
-        context['instructor'] = instructor_profile
+        context['instructor_profile'] = instructor_profile
         context['availabilities'] = available_dates
 
         return context
+
 
 class AddAvailabilityView(LoginRequiredMixin, TemplateView):
     template_name = 'driving_instructor/instructorAvailabilityView.html'

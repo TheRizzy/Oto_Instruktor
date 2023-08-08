@@ -1,17 +1,18 @@
 {% load static %}
 <!doctype html>
 <html>
-    <head><meta charset="utf-8">
+    <head>
+        <meta charset="utf-8">
+        <title>Oto Instructor</title>
         {% load bootstrap5 %}
         {% bootstrap_css %}
         {% bootstrap_javascript %}
         <link rel="shortcut icon" type="image/jpg" href="{% static 'logo.jpg' %}" >
-        <title>Oto Instructor</title>
     </head>
     <style>
-        /* Style for center all page */
-        body {
-            text-align: center;
+        Style for center all page */
+         body {
+            background: #f4f4f4;
         }
 
         /* Style for success alert */
@@ -33,7 +34,7 @@
         }
 
         footer{
-            background-color:lightgrey;
+            background-color:lightgray;
         }
 
         {% block style %}
@@ -41,47 +42,84 @@
         {% endblock style %}
     </style>
     <body>
-        <img src="{% static 'logo.jpg' %}" width="100" height="100">
-        <h1>Oto Instruktor</h1>
-        <p>Aplikacja do łączenia instuktorów z kursantami.</p>
-        <a href="{% url 'home' %}"><button>Home</button></a>
-        <a href="{% url 'instructors_list' %}"><button>Lista Instruktorów</button></a>
-
-        {% if user.is_authenticated %}
-            <br>
-            <p>Zalogowany użytkownik: {{ user.username }}</p>
-            <a href="{% url 'logout' %}"><button>Wyloguj się</button></a>
-
-                {% if user.instructor.is_instructor == True %}
-                    <a href="{% url 'instructor_profile' user.pk %}"><button>Edytuj swój profil</button></a>
-                    <a href="{% url 'instructor_availability'%}"><button>Edytuj swoją dostępność</button></a>
-                    <a href="{% url 'instructor_reservations'%}"><button>Rezerwacje</button></a>
-                {% else %}
-                    <a href="{% url 'user_reservations' %}"><button>Twoje rezerwacje u Instruktorów</button></a>
-                {% endif %}
+        <div class="container">
+            <nav class="navbar navbar-expand-sm bg-light">
+                <a class="navbar-brand" href="{% url 'home' %}">
+                <img src="{% static 'logo.jpg' %}" style="width:70px;"class="rounded-pill"></a>
                 
-        {% else %}
-            <br>
-            <p>Nie jesteś zalogowany.</p>
-            <a href="{% url 'login' %}"><button>Zaloguj się</button></a>
-            <br>
-            <a href="{% url 'register_client' %}"><button>Rejestracja dla Klienta</button></a>
-            <a href="{% url 'register_instructor' %}"><button>Rejestracja dla Instruktora</button></a>
-        {% endif %}
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'home' %}">Home</a>
+                    </li>
 
-        {% block content %}
-        
-        {% endblock %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'instructors_list' %}">Lista Instruktorów</a>
+                    </li>
+                </ul>
+            </nav>
 
-        <script>
-        // {% block script %}
-        
-        // {% endblock script %}
-        </script>
+            <nav class="navbar navbar-expand-sm bg-light">
+                <div class="container-fluid">
+                  <ul class="navbar-nav">
+
+                    {% if user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">{{ user.username }}</a>
+                        <ul class="dropdown-menu">
+                            {% if user.instructor.is_instructor == True %}
+                                <li><a class="dropdown-item" href="{% url 'instructor_profile' user.pk %}">Edytuj swój profil</a></li>
+                                <li><a class="dropdown-item" href="{% url 'instructor_availability'%}">Edytuj swoją dostępność</a></li>
+                        </ul>
+                    </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'instructor_reservations'%}">Propozycje zajęć</a>
+                            </li>
+                            
+                            {% else %}
+                                <a href="{% url 'user_reservations' %}"><button>Twoje rezerwacje u Instruktorów</button></a>
+                            {% endif %}
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'logout' %}">Wyloguj się</a>
+                        </li>
+                    
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">Zaloguj się</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Rejestracja</a>
+                            <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="{% url 'register_client' %}">Jako kursant</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'register_instructor' %}">Jako instruktor</a></li>
+                            </ul>
+                        </li>
+                    {% endif %}
+                  </ul>
+                </div>
+              </nav>
+
+            <h1>Oto Instruktor</h1>
+            <p>Aplikacja do łączenia instuktorów z kursantami.</p>
+
+
+            <div class='shadow p-4 mb-5 bg-body rounded'>
+            {% block content %}
+            
+            {% endblock %}
+            </div>
+
+            <script>
+            // {% block script %}
+            
+            // {% endblock script %}
+            </script>
+            <footer>
+                <p>Oto Instructor® - All right reserved. </p>
+            </footer>
+        </div>
     </body>
 
-    <footer>
-        <p>Oto Instructor® - All right reserved. </p>
-    </footer>
+
 
 </html>

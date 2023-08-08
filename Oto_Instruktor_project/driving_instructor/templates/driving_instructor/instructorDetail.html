@@ -3,21 +3,21 @@
 {% block content %}
     <h1>Szczegóły Instruktora</h1>
     
-    <strong>Imię:</strong> {{ instructor.user.first_name }}<br>
-    <strong>Nazwisko:</strong> {{ instructor.user.last_name }}<br>
-    <strong>Tytuł:</strong> {{ instructor.title }}<br>
-    <strong>Zakres pracy:</strong> {{ instructor.work_region }}<br>
-    <strong>Cena za 1 godzinę jazdy:</strong> {{ instructor.hourly_rate }} PLN<br>
-    <strong>Opis:</strong> {{ instructor.description }}<br>
-    <strong>Dane personalne:</strong> {{ instructor.personal_data }}<br>
-    <strong>Nazwa firmy:</strong> {{ instructor.company_data }}<br>
-    <strong>Region:</strong> {{ instructor.work_region }}<br>
+    <strong>Imię:</strong> {{ instructor_profile.user.first_name }}<br>
+    <strong>Nazwisko:</strong> {{ instructor_profile.user.last_name }}<br>
+    <strong>Tytuł:</strong> {{ instructor_profile.title }}<br>
+    <strong>Zakres pracy:</strong> {{ instructor_profile.work_region }}<br>
+    <strong>Cena za 1 godzinę jazdy:</strong> {{ instructor_profile.hourly_rate }} PLN<br>
+    <strong>Opis:</strong> {{ instructor_profile.description }}<br>
+    <strong>Dane personalne:</strong> {{ instructor_profile.personal_data }}<br>
+    <strong>Nazwa firmy:</strong> {{ instructor_profile.company_data }}<br>
+    <strong>Region:</strong> {{ instructor_profile.work_region }}<br>
     <strong>Dostępność instruktora:</strong><br>
     <ul>
         {% for availability in availabilities %}
             <li>
                 {{ availability.date }} - {{ availability.start_time }} do {{ availability.end_time }}
-                <a href="{% url 'reserve_availability' availability.id %}">Zarezerwuj</a>
+                <a href="{% url 'reserve_availability' availability.id %}"><button>Zarezerwuj</button></a>
             </li>
         {% empty %}
             <li>Brak dostępności</li>

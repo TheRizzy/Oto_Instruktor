@@ -3,14 +3,7 @@
 {% block content %}
 
 <h1>Strona główna</h1>
-
-    {% if user.is_authenticated %}
-        <p>Zalogowany użytkownik: {{ user.username }}</p>
-        <a href="{% url 'logout' %}">Wyloguj</a>
-    {% else %}
-        <p>Nie jesteś zalogowany.</p>
-        <a href="{% url 'login' %}">Zaloguj się</a>
-    {% endif %}
+{% lorem %}
 
 
 {% endblock %}
