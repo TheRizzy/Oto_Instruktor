@@ -13,7 +13,7 @@ Oto Instruktor is an app for matching driving instructors and people learning ho
 > Basic bootstrap styling was added to the project - [Bootstrap Offical ](https://getbootstrap.com/)
 
 
-### Functions application:
+### Application functions:
 * Registration for users and instructors
 * Login view
 * Listing all instructors with their detailed info
