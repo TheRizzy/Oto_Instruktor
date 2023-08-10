@@ -9,18 +9,22 @@ Oto Instruktor is an app for matching driving instructors and people learning ho
 4. Go to folder `Oto_Instruktor_projekt` and use command `python manage.py runserver`
 
 > Project run with local database in PostgreSQL. Before start using this, make sure that you have configurated PostgreSQL on your machine - [Getting Started with PostgreSQL](https://www.postgresql.org/docs/current/tutorial-start.html)
+>
+> Basic bootstrap styling was added to the project - [Bootstrap Offical ](https://getbootstrap.com/)
 
 
-### Functions:
-* Registration for user and instructors
+### Functions application:
+* Registration for users and instructors
 * Login view
 * Listing all instructors with their detailed info
 * Editing instructor profile
 * Adding availability time for the instructor
-* Admin panel via Django admin
+* ***Book available time instructor***
 * Approve or Reject new bookings for instructor
-* Confirmation and History booking for user and instructors
+* Confirmation and History booking for users and instructors
+* Admin panel via Django admin
+  
 
 ***
-> [!NOTE]
+>[!NOTE]
 > In file `requirements.txt` you can check all packages use in the environment to run project.
