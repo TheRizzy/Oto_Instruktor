@@ -1,13 +1,25 @@
 # Oto_Instruktor
 Oto Instruktor is an app for matching driving instructors and people learning how to drive.
 
-![Oto_Instruktor-logo](https://github.com/TheRizzy/Oto_Instruktor/blob/main/Oto_Instruktor_project/static/logo.jpg?raw=true)
+<img src="https://github.com/TheRizzy/Oto_Instruktor/blob/main/Oto_Instruktor_project/static/logo.jpg?raw=true" alt="Oto Instruktor" width="200"/>
 
-<img src="https://github.com/TheRizzy/ConfBooker/blob/main/ConfBooker/main/static/ConfBookLogo.png?raw=true" alt="Oto Instruktor" width="100"/>
+Project run with local database in PostgreSQL.
+Quick start:
+1. Fork repozytory to your github.
+2. Copy the URL via HTTPS to your forked repository and use the command `git clone [https://github.com....]`
+4. Go to folder `Oto_Instruktor_projekt` and use command `python manage.py runserver`
 
-
-After run server `python manage.py runserver` you can access to this functions in view:
+Functions:
+* Registration for user
+* Registration for instructors
+* Login view
+* Listing all instructors with their detailed info
+* Editing instructor profile
+* Adding availability time for the instructor
+* Admin panel via Django admin
+* Approve or Reject new bookings for instructor
+* Confirmation and History booking for user and instructors
 
 ***
-In the file `requirements.txt` you can check all packages used in the environment to run the project.
-
+> [!NOTE]
+> In file `requirements.txt` you can check all packages use in the environment to run project.
