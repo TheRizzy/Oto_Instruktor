@@ -5,13 +5,13 @@
         <ol type="1">
             {% for instructor in instructors %}
                 <li>
+                    <h5><strong>Tytuł:</strong> {{ instructor.title }}<br></h5>
                     <strong>Imię:</strong> {{ instructor.user.first_name }}<br>
                     <strong>Nazwisko:</strong> {{ instructor.user.last_name }}<br>
-                    <strong>Tytuł:</strong> {{ instructor.title }}<br>
                     <strong>Zakres pracy:</strong> {{ instructor.work_region }}<br>
-                    <strong>Cena za 1 godzinę jazdy:</strong> {{ instructor.hourly_rate }} PLN<br>
+                    <h6><strong>Cena za 1 godzinę jazdy:</strong> {{ instructor.hourly_rate }} PLN<br></h6>
                     {% if user.is_authenticated %}
-                        <a class="btn btn-outline-primary" href="{% url 'instructor_detail' instructor.pk %}" role="button" >Szczegóły i dostępności</a></button><br>
+                        <a class="btn btn-outline-primary" href="{% url 'instructor_detail' instructor.pk %}" role="button" >Szczegóły i dostępność</a></button><br>
                     {% endif %}
                     <hr>
                 </li>

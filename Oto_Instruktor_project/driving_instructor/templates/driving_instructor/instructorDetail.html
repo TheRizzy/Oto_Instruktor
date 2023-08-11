@@ -12,18 +12,31 @@
     <strong>Dane personalne:</strong> {{ instructor_profile.personal_data }}<br>
     <strong>Nazwa firmy:</strong> {{ instructor_profile.company_data }}<br>
     <strong>Region:</strong> {{ instructor_profile.work_region }}<br>
-    <strong>Dostępność instruktora:</strong><br>
-    <ul>
-        {% for availability in availabilities %}
-            <li>
-                {{ availability.date }} - {{ availability.start_time }} do {{ availability.end_time}}
-                <a class="btn btn-outline-success" href="{% url 'reserve_availability' availability.id %}" role="button">Zarezerwuj</a>
-            </li>
-        {% empty %}
-            <li>Brak dostępności</li>
-        {% endfor %}
-    </ul>
+    <h4><strong>Dostępność instruktora:</strong><br></h4>
 
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Data</th>
+                <th scope="col">Start</th>
+                <th scope="col">Koniec</th>
+                <th scope="col">Akcja</th>
+            </tr>
+        </thead>
 
-
+        <tbody>
+            {% for availability in availabilities %}
+                <tr>
+                    <td>{{ availability.date }} </td>
+                    <td>{{ availability.start_time }}</td>
+                    <td>{{ availability.end_time}}</td>
+                    <td><a class="btn btn-outline-success" href="{% url 'reserve_availability' availability.id %}" role="button">Zarezerwuj</a></td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td>Brak dostępności</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

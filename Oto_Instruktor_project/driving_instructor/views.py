@@ -92,6 +92,12 @@ class loginView(LoginView):
         """
         return reverse_lazy('home') 
     
+    def form_invalid(self, form: BaseModelForm) -> HttpResponse:
+        response = super().form_invalid(form)
+        messages.error(self.request, 'Nieprawidłowa użytkownika lub hasło.')
+        return response
+
+
 class logoutView(LogoutView):
     """
     Class view for logout. After logout user will be redirect to home view.

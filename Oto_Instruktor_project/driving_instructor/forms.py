@@ -102,7 +102,7 @@ class InstructorProfileForm(forms.ModelForm):
 
         widgets = {
             'title': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Wprowadź swój tytuł ogłoszenia'}),
-            'description': forms.Textarea(attrs={'class':'form-control', 'placeholder':'Wprowadź swoje opis'}),
+            'description': forms.Textarea(attrs={'class':'form-control', 'placeholder':'Wprowadź swój opis'}),
             'personal_data': forms.Textarea(attrs={'class':'form-control', 'placeholder':'Wprowadź swoje dane personalne'}),
             'company_data': forms.Textarea(attrs={'class':'form-control', 'placeholder':'Wprowadź swoje dane firmy'}),
             'work_region': forms.Textarea(attrs={'class':'form-control', 'placeholder':'Wprowadź swój region pracy'}),

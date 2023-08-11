@@ -35,8 +35,8 @@
                             <td>
                                 {% if reservation.is_confirmed == True %}
                                     <p style="color: rgb(3, 92, 3);">Potwierdzona</p>
-                                {% else %}
-                                    <p style="color: rgb(122, 27, 27);">Odrzucona</p>
+                                {% elif reservation.is_confirmed == False %}
+                                    <p>Nie</p>
                                 {% endif %}
                             </td>
                         </tr>
