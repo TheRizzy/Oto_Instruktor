@@ -3,15 +3,17 @@
 {% block content %}
 
 <h1>Zarezerwuj Dostępność</h1>
-<p><strong>Instruktor</strong> {{ availability.instructor.user.first_name }} {{ availability.instructor.user.last_name }}</p>
-<p><strong>Data</strong> {{ availability.date }}</p>
+<p><strong>Instruktor:</strong> {{ availability.instructor.user.first_name }} {{ availability.instructor.user.last_name }}</p>
+<p><strong>Data:</strong> {{ availability.date }}</p>
 <p><strong>Godzina rozpoczęcia:</strong> {{ availability.start_time }}</p>
 <p><strong>Godzina zakończenia:</strong> {{ availability.end_time }}</p>
+<div class="form-group">
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" class="form-control btn btn-primary"  value="Zarezerwuj">
+    </form>
+</div>
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Zarezerwuj">
-</form>
 
 {% endblock %}

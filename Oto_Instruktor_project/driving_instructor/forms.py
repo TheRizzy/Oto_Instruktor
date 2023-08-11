@@ -149,6 +149,12 @@ class ReservationForm(forms.ModelForm):
     class Meta:
         model = Reservation
         fields = ['comment']
+        labels = {
+            'comment': 'Komentarz do rezerwacji (opcjonalnie)',
+        }
+        widgets = {
+            'comment': forms.Textarea(attrs={'class':'form-control', 'placeholder':'W tym miejscu możesz zostawić komentarz dla instuktora, np."Chciałbym poćwiczyć parkowanie"'}),
+        }
 
 
 class ConfirmationForm(forms.Form):

@@ -12,7 +12,7 @@ from django.test import Client
 @pytest.mark.django_db
 def test_create_user():
     # Make new user
-    user = User.objects.create_user(
+    User.objects.create_user(
         username='User', 
         first_name='John',
         last_name='Mouse',
@@ -22,7 +22,6 @@ def test_create_user():
 
     # Check that 1x users was crate
     assert User.objects.count() == 1
-
 
 
 @pytest.mark.django_db
@@ -220,3 +219,21 @@ def test_delete_availability_view(client, user, availability):
     assert response.url == reverse('instructor_availability')
  
 
+@pytest.mark.django_db
+def test_login_view(client, create_user):
+    # Crate new user with password 
+    user = create_user(username='testuser', password='TestPassword123!@#')
+
+    # Get the URL of the login view
+    url = reverse('login')
+
+    # Make a POST request to the login view with valid credentials
+    response = client.post(url, {'username': user.username, 'password': user.password})
+
+    # Make a GET request to the login view when the user is already authenticated
+    client.force_login(user)
+    response = client.get(url)
+
+    # Check if the user is redirected to the success URL when already authenticated
+    assert response.status_code == 302
+    assert response.url == reverse('home')

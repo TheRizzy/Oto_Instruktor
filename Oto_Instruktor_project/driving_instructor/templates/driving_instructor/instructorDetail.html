@@ -16,8 +16,8 @@
     <ul>
         {% for availability in availabilities %}
             <li>
-                {{ availability.date }} - {{ availability.start_time }} do {{ availability.end_time }}
-                <a href="{% url 'reserve_availability' availability.id %}"><button>Zarezerwuj</button></a>
+                {{ availability.date }} - {{ availability.start_time }} do {{ availability.end_time}}
+                <a class="btn btn-outline-success" href="{% url 'reserve_availability' availability.id %}" role="button">Zarezerwuj</a>
             </li>
         {% empty %}
             <li>Brak dostępności</li>

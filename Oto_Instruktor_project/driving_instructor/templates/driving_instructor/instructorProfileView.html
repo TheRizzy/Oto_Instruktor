@@ -15,7 +15,7 @@
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <input type="submit" value="Zapisz zmiany">
+            <input class="btn btn-outline-success" type="submit" value="Zapisz zmiany">
         </form>
 
 {% endblock %}

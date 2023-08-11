@@ -3,52 +3,90 @@
 
 {% block content %}
 
-    <h1>Nowe rezerwacje</h1>
-    
-    <ul>
-        {% for reservation in reservations %}
-            {% if reservation.is_confirmed == False %}
-                <li>
-                    <strong>Data:</strong> {{ reservation.date }}<br>
-                    <strong>Godzina rozpoczęcia:</strong> {{ reservation.start_time }}<br>
-                    <strong>Godzina zakończenia:</strong> {{ reservation.end_time }}<br>
-                    <strong>Kursant:</strong> {{ reservation.user.first_name}} {{ reservation.user.last_name }}<br>
-                    <strong>Email:</strong> {{ reservation.user.email}}<br>
-                    <strong>Komentarz:</strong> {{ reservation.comment|default:"Brak" }}<br>
-                    <form method="POST" action="{% url 'instructor_confirm_reservation' reservation.pk %}">
-                        {% csrf_token %}
-                        <button type="submit">Potwierdź</button>
-                    </form>
-                    <form method="POST" action="{% url 'instructor_reject_reservation' reservation.pk %}">
-                        {% csrf_token %}
-                        <button type="submit">Odrzuć</button>
-                    </form>
-            {% else %}
-                <li>Brak nowych rezewacji</li>
-            {% endif %}
-        {% empty %}
-            <li>Brak rezerwacji</li>
-        {% endfor %}
-    </ul>
+    <h2>Nowe rezerwacje</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Data</th>
+                <th scope="col">Start</th>
+                <th scope="col">Koniec</th>
+                <th scope="col">Kursant</th>
+                <th scope="col">Email</th>
+                <th scope="col">Komentarz</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for reservation in reservations %}
+                {% if reservation.is_confirmed == False %}
+                    <tr>
+                        <td>{{ reservation.date}}</td>
+                        <td>{{ reservation.start_time}}</td>
+                        <td>{{ reservation.end_time}}</td>
+                        <td>{{ reservation.user.first_name}} {{ reservation.user.last_name }}</td>
+                        <td>{{ reservation.user.email}}</td>
+                        <td>{{ reservation.comment|default:"Brak" }}</td>
+                        <td>                    
+                            <form method="POST" class="form-control" action="{% url 'instructor_confirm_reservation' reservation.pk %}">
+                                {% csrf_token %}
+                                    <button type="submit" class="btn btn-success">Potwierdź</button>
+                            </form>
+                            <form method="POST" class="form-control" action="{% url 'instructor_reject_reservation' reservation.pk %}">
+                                {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger" >Odrzuć</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endif %}
+            {% empty %}
+                <tr>
+                    <td>Brak rezerwacji</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
-    <h2>Potwierdzone</h2>
+    <h3>Historia</h3>
 
-    <ul>
-        {% for reservation in reservations %}
-            {% if reservation.is_confirmed %}
-                <li>
-                    <strong>Potwierdzona:</strong> {{ reservation.is_confirmed }}<br>
-                    <strong>Data:</strong> {{ reservation.date }}<br>
-                    <strong>Godzina rozpoczęcia:</strong> {{ reservation.start_time }}<br>
-                    <strong>Godzina zakończenia:</strong> {{ reservation.end_time }}<br>
-                    <strong>Kursant:</strong> {{ reservation.user.first_name}} {{ reservation.user.last_name }}<br>
-                    <strong>Email:</strong> {{ reservation.user.email}}<br>
-                    <strong>Komentarz:</strong> {{ reservation.comment|default:"Brak" }}<br>
-            {% endif %}
-        {% empty %}
-            <li>Brak rezerwacji</li>
-        {% endfor %}
-    </ul>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Potwierdzona</th>
+                <th scope="col">Data</th>
+                <th scope="col">Start</th>
+                <th scope="col">Koniec</th>
+                <th scope="col">Kursant</th>
+                <th scope="col">Email</th>
+                <th scope="col">Komentarz</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for reservation in reservations %}
+                <tr>
+                    <td>
+                        {% if reservation.is_confirmed == True %}
+                            <div class="alert alert-success" role="alert">
+                                <strong>Potwierdzona</strong>
+                            </div>
+                        {% else %}
+                            <div class="alert alert-danger" role="alert">
+                                <strong>Odrzucona</strong>
+                            </div>
+                        {% endif %}
+                    </td>
+                    <td>{{ reservation.date }}</td>
+                    <td>{{ reservation.start_time }}</td>
+                    <td>{{ reservation.end_time }}</td>
+                    <td>{{ reservation.user.first_name}} {{ reservation.user.last_name }}</td>
+                    <td>{{ reservation.user.email}}</td>
+                    <td>{{ reservation.comment|default:"Brak" }}</td>
+                </tr>
+            {% empty %}
+                <li>Brak rezerwacji</li>
+            {% endfor %}
+        </tbody>
+    </table>
+
 
 {% endblock %}
 

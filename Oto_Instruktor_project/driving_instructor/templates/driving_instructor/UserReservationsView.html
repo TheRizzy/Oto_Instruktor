@@ -3,10 +3,48 @@
 {% block content %}
     <h1>Twoje Rezerwacje</h1>
 
-    {% for reservation in reservations %}
+    
         <div>
-            <h2>Rezerwacja nr {{ reservation.id }}</h2>
-            <p><strong>Data:</strong> {{ reservation.date }}</p>
+            <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">ID Rezerwacji</th>
+                    <th scope="col">Data</th>
+                    <th scope="col">Start</th>
+                    <th scope="col">Koniec</th>
+                    <th scope="col">Komentarz</th>
+                    <th scope="col"></th>
+                    <th scope="col">Imię instuktora</th>
+                    <th scope="col">Nazwisko instuktora</th>
+                    <th scope="col">Firma instuktora</th>
+                    <th scope="col">Czy instruktor potwierdził rezerwację?</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for reservation in reservations %}
+                        <tr>
+                            <td>{{ reservation.id }}</td>
+                            <td>{{ reservation.date}}</td>
+                            <td>{{ reservation.start_time}}</td>
+                            <td>{{ reservation.end_time}}</td>
+                            <td>{{ reservation.comment|default:"Brak" }}</td>
+                            <td></td>
+                            <td>{{ reservation.instructor.user.first_name }}</td>
+                            <td>{{ reservation.instructor.user.last_name }}</td>
+                            <td>{{ reservation.instructor.user.instructorprofile.company_data }}</td>
+                            <td>
+                                {% if reservation.is_confirmed == True %}
+                                    <p style="color: rgb(3, 92, 3);">Potwierdzona</p>
+                                {% else %}
+                                    <p style="color: rgb(122, 27, 27);">Odrzucona</p>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+              </table>
+
+            <!-- <p><strong>Data:</strong> {{ reservation.date }}</p>
             <p><strong>Godzina rozpoczęcia:</strong> {{ reservation.start_time }}</p>
             <p><strong>Godzina zakończenia:</strong> {{ reservation.end_time }}</p>
             <p><strong>Komentarz:</strong> {{ reservation.comment|default:"Brak" }}</p>
@@ -14,8 +52,6 @@
             <p><strong>Imię instruktora:</strong> {{ reservation.instructor.user.first_name }}</p>
             <p><strong>Nazwisko instruktora:</strong> {{ reservation.instructor.user.last_name }}</p>
             <h4>Status</h4>
-            <p><strong>Potwierdzona przez instuktora:</strong> {{ reservation.is_confirmed }}</p>
+            <p><strong>Potwierdzona przez instuktora:</strong> {{ reservation.is_confirmed }}</p> -->
         </div>
-        <hr>
-    {% endfor %}
 {% endblock %}

@@ -29,6 +29,13 @@ def user(django_user_model, mixer):
 
 
 @pytest.fixture
+def create_user(django_user_model):
+    def make_user(**kwargs):
+        return django_user_model.objects.create_user(**kwargs)
+    return make_user
+
+
+@pytest.fixture
 def instructor(mixer, user):
     """
     Fixture to create a fake instructor.

@@ -2,8 +2,6 @@
 
 {% block content %}
 
-<h1>Dodaj Dostępność</h1>
-
 {% if messages %}
 {% for message in messages %}
     <div {% if message.tags %}class="alert {{ message.tags }}"{% endif %}>
@@ -12,18 +10,22 @@
 {% endfor %}
 {% endif %}
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Dodaj">
-</form>
 
-<h1>Twoja dodana dostępność</h1>
+<div class='shadow p-4 mb-5 bg-body rounded'>
+    <h2>Dodaj Dostępność</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input class="btn btn-success" type="submit" value="Dodaj">
+        </form>
+</div>
+
+<h2>Twoja dodana dostępność</h2>
 <ul>
     {% for availability in availabilities %}
         <li>
             {{ availability.date }} - {{ availability.start_time }} do {{ availability.end_time }}
-            <a href="{% url 'delete_availability' availability.pk %}"><button>Usuń</button></a>
+            <a class="btn btn-outline-danger btn-sm" href="{% url 'delete_availability' availability.pk %}" role="button">Usuń</a>
         </li>
     {% endfor %}
 </ul>

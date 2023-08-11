@@ -208,25 +208,25 @@ class DeleteAvailabilityView(LoginRequiredMixin, View):
         return redirect('instructor_availability')
 
 
-class ReserveAvailabilityView(LoginRequiredMixin, View):
-    template_name = 'driving_instructor/reserveAvailability.html'
-    form_class = ReservationForm
+# class ReserveAvailabilityView(LoginRequiredMixin, View):
+#     template_name = 'driving_instructor/reserveAvailability.html'
+#     form_class = ReservationForm
 
-    def get(self, request, availability_id):
-        availability = Availability.objects.get(pk=availability_id)
-        form = self.form_class(initial={'date': availability.date, 'start_time': availability.start_time, 'end_time': availability.end_time})
-        return render(request, self.template_name, {'form': form, 'availability': availability})
+#     def get(self, request, availability_id):
+#         availability = Availability.objects.get(pk=availability_id)
+#         form = self.form_class(initial={'date': availability.date, 'start_time': availability.start_time, 'end_time': availability.end_time})
+#         return render(request, self.template_name, {'form': form, 'availability': availability})
 
-    def post(self, request, availability_id):
-        availability = Availability.objects.get(pk=availability_id)
-        form = self.form_class(request.POST)
-        if form.is_valid():
-            reservation = form.save(commit=False)
-            reservation.user = request.user
-            reservation.instructor = availability.instructor
-            reservation.save()
-            return redirect('home') #change to redirect to some success url
-        return render(request, self.template_name, {'form': form, 'availability': availability})
+#     def post(self, request, availability_id):
+#         availability = Availability.objects.get(pk=availability_id)
+#         form = self.form_class(request.POST)
+#         if form.is_valid():
+#             reservation = form.save(commit=False)
+#             reservation.user = request.user
+#             reservation.instructor = availability.instructor
+#             reservation.save()
+#             return redirect('home') #change to redirect to some success url
+#         return render(request, self.template_name, {'form': form, 'availability': availability})
 
 
 class ReserveAvailabilityView(FormView):
