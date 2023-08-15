@@ -63,63 +63,7 @@ def test_add_availability_view(client, user, instructor):
     assert Availability.objects.first().instructor == instructor
 
 
-@pytest.mark.skip("This test dont work")
-def test_instructor_detail_view(client):
-    # Create a user and instructor profile using Mixer
-    user = mixer.blend(User)
-    instructor_profile = mixer.blend(InstructorProfile, user=user)
-    instructor = mixer.blend(Instructor, user=user)
-
-    # Create an availability for the instructor
-    availability = mixer.blend(Availability, instructor=instructor)
-
-    # Log in the user
-    client.force_login(user)
-
-    # Get the URL of the instructor detail view
-    url = reverse('instructor_detail', args=[instructor_profile.pk])
-
-    # Make a GET request to the instructor detail view
-    response = client.get(url)
-    print(response)
-
-    # Check if the response status code is 200 (OK)
-    assert response.status_code == 200
-
-    # Assert that instructor's information is present in the response content
-    assert instructor_profile.title in str(response.content)
-    assert instructor_profile.description in str(response.content)
-    assert instructor_profile.personal_data in str(response.content)
-    # ... assert other instructor details ...
-
-    # Assert that availability information is present in the response content
-    assert availability.date.strftime('%Y-%m-%d') in str(response.content)
-    assert availability.start_time.strftime('%H:%M:%S') in str(response.content)
-    assert availability.end_time.strftime('%H:%M:%S') in str(response.content)
-
-    # Get the user's reserved date and time
-    reserved_date = availability.date
-    reserved_start_time = availability.start_time
-
-    # Reserve the availability
-    reservation_data = {
-        'instructor': instructor_profile.pk,
-        'user': user.pk,
-        'date': reserved_date,
-        'start_time': reserved_start_time,
-        'end_time': availability.end_time,
-    }
-    response = client.post(reverse('reserve_availability'), reservation_data, follow=True)
-
-    # Check if the reservation was successful
-    assert Reservation.objects.filter(instructor=instructor_profile, user=user).exists()
-
-    # Check if the user's reserved date and time is now shown as reserved
-    assert reserved_date.strftime('%Y-%m-%d') not in str(response.content)
-    assert reserved_start_time.strftime('%H:%M:%S') not in str(response.content)
-
-
-@pytest.mark.skip("This test dont work too")
+@pytest.mark.skip("This test dont work too, assertion with response.status_code error")
 def test_instructor_detail_view():
     # Create a user and instructor profile for that user
     user = User.objects.create(username='testuser')
