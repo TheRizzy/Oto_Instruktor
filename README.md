@@ -6,7 +6,11 @@ Oto Instruktor is an app for matching driving instructors and people learning ho
 ## Quick start:
 1. Fork repozytory to your github.
 2. Copy the URL via HTTPS to your forked repository and use the command `git clone [https://github.com....]`
-4. Go to folder `Oto_Instruktor_projekt` and use command `python manage.py runserver`
+3. Create new virtualenv `virtualenv venv`
+4. Actaive new env `source venv/bin/activate` (*If you need turn off venv use `deactivate`*)
+5. Install packages from requirements.txt `pip install -r requirements.txt`
+6. Go to folder `Oto_Instruktor_projekt` and use command `python manage.py runserver`
+
 
 > Project run with local database in PostgreSQL. Before start using this, make sure that you have configurated PostgreSQL on your machine - [Getting Started with PostgreSQL](https://www.postgresql.org/docs/current/tutorial-start.html)
 >
@@ -23,7 +27,10 @@ Oto Instruktor is an app for matching driving instructors and people learning ho
 * Approve or Reject new bookings for instructor
 * Confirmation and History booking for users and instructors
 * Admin panel via Django admin
-  
+
+#### Sample of screenshot from application 
+
+<img src="https://raw.githubusercontent.com/TheRizzy/Oto_Instruktor/main/sample.png" alt="Sample screeshot" width="800"/>
 
 ***
 >[!NOTE]
